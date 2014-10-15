@@ -53,3 +53,20 @@ def view_single_post(id):
 	return render_template('post.html',
 		post=post
 		)
+
+@app.route('/post/<int:id>/edit', methods=['GET'])
+def edit_post_get(id):
+	post = session.query(Post).filter(Post.id == id).one()
+	return render_template('edit_post.html',
+		post=post
+		)
+
+@app.route('/post/<int:id>/edit', methods=['POST'])
+def edit_post_post(id):
+	post = session.query(Post).filter(Post.id == id).one()
+	post.title = request.form["title"]
+	post.content = mistune.markdown(request.form["content"])
+	session.add(post)
+	session.commit()
+	return redirect(url_for('posts'))
+

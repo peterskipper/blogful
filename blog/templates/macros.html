@@ -5,6 +5,9 @@
 			<li>
 				{{post.datetime | dateformat("%d/%m/%y") }}
 			</li>
+			<li>
+				<a href="{{ url_for('edit_post_get', id=post.id) }} "><button type="button" class="btn btn-default">Edit</button></a>
+			</li>
 		</ul>
 	</div>
 	<div class="col-md-10">
