@@ -23,5 +23,6 @@ def seed():
 			)
 		session.add(post)
 	session.commit()
+
 if __name__ == '__main__':
 	manager.run()

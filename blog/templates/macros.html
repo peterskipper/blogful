@@ -8,8 +8,8 @@
 		</ul>
 	</div>
 	<div class="col-md-10">
-		<h1>
-			{{ post.title }}
+		<h1 class="undecorate">
+			<a href="{{ url_for('view_single_post', id=post.id) }}">{{ post.title }}</a>
 		</h1>
 		{{ post.content | safe }}
 	</div>

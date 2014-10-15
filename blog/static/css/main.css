@@ -2,3 +2,11 @@ div.metadata {
 	margin-top: 20px;
 	font-size: 1.5em;
 }
+
+.undecorate a {
+	text-decoration: none;
+}
+
+.undecorate a:hover {
+	color: #145214;
+}
