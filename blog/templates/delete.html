@@ -1,0 +1,12 @@
+{% import "macros.html" as macros %}
+{% extends "base.html" %}
+{% block content %}
+<h3>Click <em>Confirm</em> to delete post titled "{{post.title}}":</h3>
+{{ macros.render_post_no_meta(post)}}
+<div class="row text-center">
+	<form role="form" method="POST">
+		<button type="submit" class="btn btn-danger">Confirm</button>
+		<a href="{{ url_for('posts') }} "><button type="button" class="btn btn-default">Cancel</button></a>
+	</form>
+</div>
+{% endblock %}
