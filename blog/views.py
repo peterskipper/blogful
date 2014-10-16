@@ -39,12 +39,15 @@ def add_post_get():
 
 import mistune
 from flask import request, redirect, url_for
+from flask.ext.login import current_user
+
 @app.route('/post/add', methods=['POST'])
 @login_required
 def add_post_post():
 	post = Post(
 		title=request.form["title"],
-		content=mistune.markdown(request.form["content"])
+		content=mistune.markdown(request.form["content"]),
+		author=current_user
 		)
 	session.add(post)
 	session.commit()
