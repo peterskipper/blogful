@@ -60,12 +60,18 @@ def view_single_post(id):
 		post=post
 		)
 
+from flask import flash
 @app.route('/post/<int:id>/edit', methods=['GET'])
+@login_required
 def edit_post_get(id):
 	post = session.query(Post).filter(Post.id == id).one()
-	return render_template('edit_post.html',
-		post=post
-		)
+	if int(current_user.get_id()) == post.author.id:
+		return render_template('edit_post.html',
+			post=post
+			)
+	else:
+		flash('You cannot edit posts which you did not author.  Login as {} to edit "{}"'.format(post.author.name,post.title), 'danger')
+		return redirect(url_for('posts'))
 
 @app.route('/post/<int:id>/edit', methods=['POST'])
 def edit_post_post(id):
@@ -77,24 +83,30 @@ def edit_post_post(id):
 	return redirect(url_for('posts'))
 
 @app.route('/post/<int:id>/delete', methods=['GET'])
+@login_required
 def delete_post_get(id):
 	post = session.query(Post).filter(Post.id == id).one()
-	return render_template('delete.html', 
-		post=post
-		)
+	if int(current_user.get_id()) == post.author.id:
+		return render_template('delete.html', 
+			post=post
+			)
+	else:
+		flash('You cannot delete posts which you did not author.  Login as {} to delete "{}"'.format(post.author.name,post.title), 'danger')
+		return redirect(url_for('posts'))
 
 @app.route('/post/<int:id>/delete', methods=['POST'])
 def delete_post_post(id):
 	post = session.query(Post).filter(Post.id == id).one()
 	session.delete(post)
 	session.commit()
+	flash('Post deleted', 'info')
 	return redirect(url_for('posts'))
 
 @app.route('/login', methods=['GET'])
 def login_get():
 	return render_template('login.html')
 
-from flask import flash
+
 from flask.ext.login import login_user
 from werkzeug.security import check_password_hash
 from models import User
