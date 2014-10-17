@@ -11,4 +11,6 @@ Werkzeug==0.9.6
 alembic==0.6.7
 itsdangerous==0.24
 mistune==0.4.1
+selenium==2.43.0
+splinter==0.6.0
 wsgiref==0.1.2

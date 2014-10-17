@@ -61,11 +61,12 @@ def view_single_post(id):
 		)
 
 from flask import flash
+from flask.ext.login import login_fresh
 @app.route('/post/<int:id>/edit', methods=['GET'])
 @login_required
 def edit_post_get(id):
 	post = session.query(Post).filter(Post.id == id).one()
-	if int(current_user.get_id()) == post.author.id:
+	if int(current_user.get_id()) == post.author.id and login_fresh():
 		return render_template('edit_post.html',
 			post=post
 			)
@@ -86,7 +87,7 @@ def edit_post_post(id):
 @login_required
 def delete_post_get(id):
 	post = session.query(Post).filter(Post.id == id).one()
-	if int(current_user.get_id()) == post.author.id:
+	if int(current_user.get_id()) == post.author.id and login_fresh():
 		return render_template('delete.html', 
 			post=post
 			)
